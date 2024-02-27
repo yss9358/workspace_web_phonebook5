@@ -8,8 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.javaex.vo.PersonVo;
+import org.springframework.stereotype.Repository;
 
+import com.javaex.vo.PersonVo;
+@Repository
 public class PhonebookDao {
 
 	// 필드
@@ -130,7 +132,7 @@ public class PhonebookDao {
 			count = pstmt.executeUpdate();
 
 			// 4.결과처리
-			System.out.println(count + "건 등록되었습니다.");
+			/*System.out.println(count + "건 등록되었습니다.");*/
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
@@ -246,7 +248,7 @@ public class PhonebookDao {
 			count = pstmt.executeUpdate();
 
 			// 4.결과처리
-			System.out.println(count + "건 수정되었습니다.");
+			/*System.out.println(count + "건 수정되었습니다.");*/
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);

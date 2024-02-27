@@ -18,7 +18,7 @@
 	아래 항목을 기입하고 "수정" 버튼을 클릭하세요
 </p>
 
-<form action="/phonebook5/phone/update" method="get">
+<form action="/phonebook5/phone/modify" method="get">
 	<div>
 		<label>이름(name)</label>
 		<input type="text" name="name" value="${requestScope.personvoOne.name}">
