@@ -1,13 +1,15 @@
 package com.javaex.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.javaex.vo.PersonVo;
@@ -18,31 +20,20 @@ public class PhonebookDao {
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
-	private String driver = "com.mysql.cj.jdbc.Driver";
-	private String url = "jdbc:mysql://localhost:3306/phone_db";
-	private String id = "phone";
-	private String pw = "phone";
 
+	@Autowired
+	private DataSource dataSource;
 	// 생성자
 	// 메소드-gs
-
 	// 메소드-일반
 
 	// 연결
 	protected void getConnection() {
 		try {
-			// 1. JDBC 드라이버 (Oracle) 로딩
-			Class.forName(driver);
-
 			// 2. Connection 얻어오기
-			conn = DriverManager.getConnection(url, id, pw);
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("error: 드라이버 로딩 실패 - " + e);
-
+			conn = dataSource.getConnection();
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-
 		}
 	}
 

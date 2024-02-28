@@ -51,7 +51,7 @@ public class PhonebookService {
 	}
 	public int exeModify(PersonVo personVo) {
 		/*System.out.println("service>exeModify");*/
-		PhonebookDao phonebookDao = new PhonebookDao();
+//		PhonebookDao phonebookDao = new PhonebookDao();
 		int count = phonebookDao.personUpdate(personVo);
 		return count;
 	}
