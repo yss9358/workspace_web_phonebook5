@@ -37,7 +37,7 @@
 
 	<!-- MyBatis SqlSessionFactoryBean 설정 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="mysqlDatasource" />
+		<property name="dataSource" ref="mysqlDataSource" />
 		<property name="configLocation" value="classpath:mybatis/configuration.xml" />
 	</bean>
 	
