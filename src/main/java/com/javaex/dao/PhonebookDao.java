@@ -29,7 +29,7 @@ public class PhonebookDao {
 	// 메소드-일반
 
 	// 연결
-	public void getConnection() {
+	protected void getConnection() {
 		try {
 			// 1. JDBC 드라이버 (Oracle) 로딩
 			Class.forName(driver);
@@ -47,7 +47,7 @@ public class PhonebookDao {
 	}
 
 	// 종료
-	public void close() {
+	protected void close() {
 		// 5. 자원정리
 		try {
 			if (rs != null) {
