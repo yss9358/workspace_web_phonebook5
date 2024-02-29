@@ -1,12 +1,7 @@
 package com.javaex.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-
-import javax.sql.DataSource;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,247 +11,47 @@ import com.javaex.vo.PersonVo;
 @Repository
 public class PhonebookDao {
 
-	// 필드
-	private Connection conn = null;
-	private PreparedStatement pstmt = null;
-	private ResultSet rs = null;
-
-	@Autowired
-	private DataSource dataSource;
+//	// 필드
 	@Autowired
 	private SqlSession sqlSession;
 	// 생성자
 	// 메소드-gs
 	// 메소드-일반
-
-	// 연결
-	protected void getConnection() {
-		try {
-			// 2. Connection 얻어오기
-			conn = dataSource.getConnection();
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-	}
-
-	// 종료
-	protected void close() {
-		// 5. 자원정리
-		try {
-			if (rs != null) {
-				rs.close();
-			}
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-	}
-
-	// 전체가져오기
 	public List<PersonVo> personSelect() {
-
-		System.out.println("personSelect()");
 		List<PersonVo> personList = sqlSession.selectList("phonebook.select");
-		System.out.println(personList);
-//		this.getConnection();
-//
-//		List<PersonVo> personList = new ArrayList<PersonVo>();
-//
-//		try {
-//			// 3. SQL문 준비 / 바인딩 / 실행
-//			// SQL문 준비
-//			String query = "";
-//			query += " select person_id, ";
-//			query += "	      name, ";
-//			query += "        hp, ";
-//			query += "	      company ";
-//			query += " from person ";
-//
-//			// 바인딩
-//			pstmt = conn.prepareStatement(query);
-//
-//			// 실행
-//			rs = pstmt.executeQuery();
-//
-//			// 4.결과처리
-//			while (rs.next()) {// 반복
-//				int personId = rs.getInt("person_id");
-//				String name = rs.getString("name");
-//				String hp = rs.getString("hp");
-//				String company = rs.getString("company");
-//
-//				// db에서 가져온 데이터 vo로 묶기
-//				PersonVo personVo = new PersonVo(personId, name, hp, company);
-//				// 리스트에 주소 추가
-//				personList.add(personVo);
-//			}
-//
-//		} catch (SQLException e) {
-//			System.out.println("error:" + e);
-//		}
-//
-//		this.close();
-
 		return personList;
 	}
 	
-	// 등록
 	public int personInsert(PersonVo personVo) {
 		int count = sqlSession.insert("phonebook.insert", personVo);
-		System.out.println(count);
-//		this.getConnection();
-//		
-//		try {
-//			// 3. SQL문 준비 / 바인딩 / 실행
-//			// SQL문 준비
-//			String query = "";
-//			query += " insert into person ";
-//			query += " values(null, ?, ?, ?) ";
-//
-//			// 바인딩
-//			pstmt = conn.prepareStatement(query);
-//			pstmt.setString(1, personVo.getName());
-//			pstmt.setString(2, personVo.getHp());
-//			pstmt.setString(3, personVo.getCompany());
-//
-//			// 실행
-//			count = pstmt.executeUpdate();
-//
-//			// 4.결과처리
-//			/*System.out.println(count + "건 등록되었습니다.");*/
-//
-//		} catch (SQLException e) {
-//			System.out.println("error:" + e);
-//		} 
-//		
-//		this.close();
-		
+		return count;
+	}
+	public int personInsert2(Map<String, String> pMap) {
+		int count = sqlSession.insert("phonebook.insert2",pMap);
 		return count;
 	}
 
-	// 삭제
 	public int personDelete(int no) {
-		System.out.println("personDelete");
 		int count = sqlSession.delete("phonebook.delete",no);
-		System.out.println(count);
-//		this.getConnection();
-//
-//		try {
-//			// 3. SQL문 준비 / 바인딩 / 실행
-//			// SQL문 준비
-//			String query = "";
-//			query += " delete from person ";
-//			query += " where person_id = ? ";
-//
-//			// 바인딩
-//			pstmt = conn.prepareStatement(query);
-//			pstmt.setInt(1, no);
-//
-//			// 실행
-//			count = pstmt.executeUpdate();
-//
-//			// 4.결과처리
-//			System.out.println(count + "건 삭제되었습니다.");
-//
-//		} catch (SQLException e) {
-//			System.out.println("error:" + e);
-//		}
-//
-//		this.close();
-
 		return count;
 	}
 
-	// 1개 가져오기
 	public PersonVo personSelectOne(int no) {
-		System.out.println("personSelectOne");
 		PersonVo personVo = sqlSession.selectOne("phonebook.selectOne",no);
-		System.out.println(personVo);
-		
-//		this.getConnection();
-//
-//		PersonVo personVo = null;
-//
-//		try {
-//			// 3. SQL문 준비 / 바인딩 / 실행
-//			// SQL문 준비
-//			String query = "";
-//			query += " select person_id, ";
-//			query += "	      name, ";
-//			query += "        hp, ";
-//			query += "	      company ";
-//			query += " from person ";
-//			query += " where person_id=? ";
-//
-//			// 바인딩
-//			pstmt = conn.prepareStatement(query);
-//			pstmt.setInt(1, no);
-//
-//			// 실행
-//			rs = pstmt.executeQuery();
-//
-//			// 4.결과처리
-//			while (rs.next()) {// 반복
-//				int personId = rs.getInt("person_id");
-//				String name = rs.getString("name");
-//				String hp = rs.getString("hp");
-//				String company = rs.getString("company");
-//
-//				// db에서 가져온 데이터 vo로 묶기
-//				personVo = new PersonVo(personId, name, hp, company);
-//
-//			}
-//
-//		} catch (SQLException e) {
-//			System.out.println("error:" + e);
-//		}
-//
-//		this.close();
-
 		return personVo;
 	}
 	
-	// 수정
+	public Map<String,Object> personSelectOne2(int no) {
+		Map<String, Object> pMap = sqlSession.selectOne("phonebook.selectOne2", no);
+//		System.out.println(pMap.get("person_id"));
+//		System.out.println(pMap.get("name"));
+//		System.out.println(pMap.get("hp"));
+//		System.out.println(pMap.get("company"));
+		return pMap;
+	}
+	
 	public int personUpdate(PersonVo personVo) {
-		System.out.println("personUpdate");
 		int count = sqlSession.update("phonebook.update", personVo);
-		System.out.println(count);
-//		this.getConnection();
-//		
-//		try {
-//			// 3. SQL문 준비 / 바인딩 / 실행
-//			// SQL문 준비
-//			String query = "";
-//			query += " update person ";
-//			query += " set name=?, ";
-//			query += " 	   hp=?, ";
-//			query += "     company=? ";
-//			query += " where person_id = ? ";
-//
-//			// 바인딩
-//			pstmt = conn.prepareStatement(query);
-//			pstmt.setString(1, personVo.getName());
-//			pstmt.setString(2, personVo.getHp());
-//			pstmt.setString(3, personVo.getCompany());
-//			pstmt.setInt(4, personVo.getPersonId());
-//			
-//			// 실행
-//			count = pstmt.executeUpdate();
-//
-//			// 4.결과처리
-//			/*System.out.println(count + "건 수정되었습니다.");*/
-//
-//		} catch (SQLException e) {
-//			System.out.println("error:" + e);
-//		} 
-//		
-//		this.close();
-
 		return count;
 	}
 

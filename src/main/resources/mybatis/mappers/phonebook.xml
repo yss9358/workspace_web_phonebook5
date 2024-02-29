@@ -2,27 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="phonebook">
 
+	<!-- resultMap -->
+	<!-- PersonVo Mapping -->
+	<resultMap id="resultMapPersonVo" type="com.javaex.vo.PersonVo">
+		<result column="person_id" property="personId"></result>
+		<result column="name" property="name"></result>
+		<result column="hp" property="hp"></result>
+		<result column="company" property="company"></result>
+	</resultMap>
+
+
+
 	<!-- 전체 리스트 가져오기 -->
 	<!-- 쿼리문 작성 select -->
-	<select id="select" resultType="com.javaex.vo.PersonVo">
-		select	person_id  personId,
-				name,
-		        hp,
-		        company
-		from person
+	<select id="select" resultMap="resultMapPersonVo">
+		<![CDATA[
+			select	person_id,
+					name,
+			        hp,
+			        company
+			from person
+		]]>
 	</select>
 	
 	
 	
 	<!-- 한명 데이터 가져오기 -->
 	<!-- 쿼리문 작성 selectOne -->
-	<select id="selectOne" parameterType="int" resultType="com.javaex.vo.PersonVo">
-		select	person_id personId,
-				name,
-		        hp,
-		        company
-		from person
-		where person_id = #{no}
+	<select id="selectOne" parameterType="int" resultMap="resultMapPersonVo">
+		<![CDATA[
+			select	person_id,
+					name,
+			        hp,
+			        company
+			from person
+			where person_id = #{no}
+		]]>
+	</select>
+	
+	
+	<!-- 한명 데이터 가져오기  -->
+	<select id="selectOne2" parameterType="int" resultType="map">
+		<![CDATA[
+			select	person_id,
+					name,
+			        hp,
+			        company
+			from person
+			where person_id = #{no}
+		]]>
 	</select>
 	
 	
@@ -30,40 +58,46 @@
 	<!-- 등록하기 -->
 	<!-- 쿼리문 작성 insert -->
 	<insert id="insert" parameterType="com.javaex.vo.PersonVo">
-		insert into person
-		value(null, #{name}, #{hp}, #{company})
+		<![CDATA[
+			insert into person
+			value(null, #{name}, #{hp}, #{company})
+		]]>
 	</insert>
+	
+	
+	<!-- 1명 등록하기 -->
+	<!-- 쿼리문 작성 insert -->
+	<!-- parameterType 이 map 이면 map에서 만든 별명을 값에 넣어준다 -->
+	<insert id="insert2" parameterType="map">
+		<![CDATA[
+				insert into person
+				value(null, #{name}, #{hp}, #{company})
+			]]>
+	</insert>
+	
+	
 	
 	
 	<!-- 수정하기 -->
 	<!-- 쿼리문 작성 update -->
 	<update id="update" parameterType="com.javaex.vo.PersonVo">
-		update person
-		set name = #{name},
-			hp = #{hp},
-		    company = #{company}
-		where person_id = #{personId}
+		<![CDATA[
+			update person
+			set name = #{name},
+				hp = #{hp},
+			    company = #{company}
+			where person_id = #{personId}
+		]]>
 	</update>
 
 
 	<!-- 삭제하기 -->
 	<!-- 쿼리문 작성 delete -->
 	<delete id="delete" parameterType="int">
-		delete from person
-		where person_id=#{no}
+		<![CDATA[
+			delete from person
+			where person_id=#{no}
+		]]>
 	</delete>
-	
-
-
-
-
-
-
-
-
-
-
-
-
 	
 </mapper>
